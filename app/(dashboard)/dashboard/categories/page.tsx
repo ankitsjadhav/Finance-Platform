@@ -17,7 +17,7 @@ const MOCK_CATEGORIES = [
   { id: "2", name: "Travel" },
 ];
 
-const CategoriesPage = () => {
+export default function CategoriesPage() {
   const newCategory = useNewCategory();
 
   const [categories, setCategories] = useState(MOCK_CATEGORIES);
@@ -61,23 +61,17 @@ const CategoriesPage = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <DataTable
-            columns={columns}
-            data={categories}
-            filterKey={"name"}
-            onDelete={handleDelete}
-            disabled={isPending}
-          />
+          <Suspense fallback={<div>Loading table...</div>}>
+            <DataTable
+              columns={columns}
+              data={categories}
+              filterKey={"name"}
+              onDelete={handleDelete}
+              disabled={isPending}
+            />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
-  );
-};
-
-export default function CategoriesPageWrapper() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CategoriesPage />
-    </Suspense>
   );
 }

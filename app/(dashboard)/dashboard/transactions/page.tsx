@@ -30,7 +30,7 @@ const INITIAL_IMPORT_RESULTS = {
   meta: {},
 };
 
-const TransactionsPage = () => {
+export default function TransactionsPage() {
   const [AccountDialog, confirm] = useSelectAccount();
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
@@ -41,6 +41,8 @@ const TransactionsPage = () => {
 
   const isDisabled = isLoading || isDeleting;
 
+  const newTransaction = useNewTransaction();
+
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
     setImportResults(results);
     setVariant(VARIANTS.IMPORT);
@@ -50,8 +52,6 @@ const TransactionsPage = () => {
     setImportResults(INITIAL_IMPORT_RESULTS);
     setVariant(VARIANTS.LIST);
   };
-
-  const newTransaction = useNewTransaction();
 
   const onSubmitImport = async (values: ResponseType[]) => {
     const accountId = await confirm();
@@ -124,30 +124,24 @@ const TransactionsPage = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <DataTable
-            columns={columns}
-            data={transactions}
-            filterKey={"payee"}
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              setIsDeleting(true);
-              setTransactions((prev) =>
-                prev.filter((t) => !ids.includes(t.id))
-              );
-              setIsDeleting(false);
-            }}
-            disabled={isDisabled}
-          />
+          <Suspense fallback={<div>Loading table...</div>}>
+            <DataTable
+              columns={columns}
+              data={transactions}
+              filterKey={"payee"}
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                setIsDeleting(true);
+                setTransactions((prev) =>
+                  prev.filter((t) => !ids.includes(t.id))
+                );
+                setIsDeleting(false);
+              }}
+              disabled={isDisabled}
+            />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
-  );
-};
-
-export default function TransactionsPageWrapper() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <TransactionsPage />
-    </Suspense>
   );
 }

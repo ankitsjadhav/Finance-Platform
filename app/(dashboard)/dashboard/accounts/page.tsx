@@ -10,10 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 
-const AccountPage = () => {
+export default function AccountsPage() {
   const newAccount = useNewAccount();
 
-  // Local state for accounts and loading
   const [accounts, setAccounts] = useState<{ id: string; name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -48,28 +47,22 @@ const AccountPage = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <DataTable
-            columns={columns}
-            data={accounts}
-            filterKey={"name"}
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              setIsDeleting(true);
-              setAccounts((prev) => prev.filter((a) => !ids.includes(a.id)));
-              setIsDeleting(false);
-            }}
-            disabled={isDisabled}
-          />
+          <Suspense fallback={<div>Loading table...</div>}>
+            <DataTable
+              columns={columns}
+              data={accounts}
+              filterKey={"name"}
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                setIsDeleting(true);
+                setAccounts((prev) => prev.filter((a) => !ids.includes(a.id)));
+                setIsDeleting(false);
+              }}
+              disabled={isDisabled}
+            />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
-  );
-};
-
-export default function AccountsPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AccountPage />
-    </Suspense>
   );
 }
