@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { format, parse } from "date-fns";
 
@@ -25,7 +26,7 @@ type Props = {
 
 export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
   const [selectedColumns, setSelectedColumns] = useState<SelectedColumnsState>(
-    {},
+    {}
   );
 
   const headers = data[0];
@@ -33,7 +34,7 @@ export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
 
   const onTableHeadSelectChange = (
     columnIndex: number,
-    value: string | null,
+    value: string | null
   ) => {
     setSelectedColumns((prev) => {
       const newSelectedColumns = { ...prev };

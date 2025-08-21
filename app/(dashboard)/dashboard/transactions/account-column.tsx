@@ -1,3 +1,4 @@
+"use client";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 
 type Props = {

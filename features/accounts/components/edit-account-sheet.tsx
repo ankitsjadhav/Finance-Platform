@@ -1,3 +1,4 @@
+"use client";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
