@@ -1,5 +1,12 @@
+"use client";
 import { Loader2 } from "lucide-react";
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  UserButton,
+  useUser,
+  useClerk,
+} from "@clerk/nextjs";
 
 import { HeaderLogo } from "@/components/header-logo";
 import { Navigation } from "@/components/navigation";
@@ -7,6 +14,11 @@ import { WelcomeMsg } from "@/components/welcome-msg";
 import { Filters } from "@/components/filters";
 
 export const Header = () => {
+  const { user } = useUser();
+  const { signOut } = useClerk();
+  const demoEmail = process.env.NEXT_PUBLIC_DEMO_USER_EMAIL;
+  const isDemo = user?.emailAddresses?.[0]?.emailAddress === demoEmail;
+
   return (
     <header className="bg-gradient-to-b from-blue-700 to-blue-500 px-4 py-8 lg:px-14 pb-36">
       <div className="max-w-screen-2xl mx-auto">
@@ -16,7 +28,21 @@ export const Header = () => {
             <Navigation />
           </div>
           <ClerkLoaded>
-            <UserButton afterSignOutUrl="/" />
+            {isDemo ? (
+              <button
+                onClick={() =>
+                  signOut(() => {
+                    setTimeout(() => window.location.replace("/"), 500);
+                  })
+                }
+                className="px-4 py-2 rounded bg-white/10 text-white hover:bg-white/20 transition border-none"
+                aria-label="Sign out demo user"
+              >
+                Sign out
+              </button>
+            ) : (
+              <UserButton afterSignOutUrl="/" />
+            )}
           </ClerkLoaded>
           <ClerkLoading>
             <Loader2 className="size-8 animate-spin text-slate-400" />

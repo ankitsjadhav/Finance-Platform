@@ -13,7 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-import { ResponseType } from "@/app/(dashboard)/transactions/columns";
+import { ResponseType } from "@/app/(dashboard)/dashboard/transactions/columns";
 
 const formSchema = z.object({
   date: z.coerce.date(),

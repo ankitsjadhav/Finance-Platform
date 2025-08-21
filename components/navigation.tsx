@@ -11,19 +11,19 @@ import { Menu } from "lucide-react";
 
 const routes = [
   {
-    href: "/",
+    href: "/dashboard",
     label: "Overview",
   },
   {
-    href: "/transactions",
+    href: "/dashboard/transactions",
     label: "Transactions",
   },
   {
-    href: "/accounts",
+    href: "/dashboard/accounts",
     label: "Accounts",
   },
   {
-    href: "/categories",
+    href: "/dashboard/categories",
     label: "Categories",
   },
 ];
