@@ -1,16 +1,13 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
-
 import { Loader2, Plus } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/data-table";
-
 import { columns } from "./columns";
 
 const AccountPage = () => {
@@ -69,4 +66,10 @@ const AccountPage = () => {
   );
 };
 
-export default AccountPage;
+export default function AccountsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AccountPage />
+    </Suspense>
+  );
+}

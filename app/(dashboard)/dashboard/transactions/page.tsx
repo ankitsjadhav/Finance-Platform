@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
@@ -144,4 +144,10 @@ const TransactionsPage = () => {
   );
 };
 
-export default TransactionsPage;
+export default function TransactionsPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TransactionsPage />
+    </Suspense>
+  );
+}

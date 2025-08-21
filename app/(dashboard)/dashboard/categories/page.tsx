@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 import { useNewCategory } from "@/features/categories/hooks/use-new-category";
 import { Loader2, Plus } from "lucide-react";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,4 +74,10 @@ const CategoriesPage = () => {
   );
 };
 
-export default CategoriesPage;
+export default function CategoriesPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoriesPage />
+    </Suspense>
+  );
+}
