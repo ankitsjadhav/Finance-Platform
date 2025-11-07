@@ -15,16 +15,16 @@ export function convertAmountToMiliunits(amount: number) {
 }
 
 export function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
     minimumFractionDigits: 2,
   }).format(value);
 }
 
 export function calculatePercentageChange(
   current: number,
-  previous: number,
+  previous: number
 ): number {
   if (previous === 0) {
     return previous === current ? 0 : 100;
@@ -39,7 +39,7 @@ export function fillMissingDays(
     expense: number;
   }[],
   startDate: Date,
-  endDate: Date,
+  endDate: Date
 ) {
   if (activeDays.length === 0) {
     return [];
@@ -77,11 +77,17 @@ export function formatDateRange(period?: Period) {
   const defaultFrom = subDays(defaultTo, 30);
 
   if (!period?.from) {
-    return `${format(defaultFrom, "LLL dd")} - ${format(defaultTo, "LLL dd, y")}`;
+    return `${format(defaultFrom, "LLL dd")} - ${format(
+      defaultTo,
+      "LLL dd, y"
+    )}`;
   }
 
   if (period.to) {
-    return `${format(period.from, "LLL dd")} - ${format(period.to, "LLL dd, y")}`;
+    return `${format(period.from, "LLL dd")} - ${format(
+      period.to,
+      "LLL dd, y"
+    )}`;
   }
 
   return format(period.from, "LLL dd, y");
@@ -89,7 +95,7 @@ export function formatDateRange(period?: Period) {
 
 export function formatPercentage(
   value: number,
-  options: { addPrefix?: boolean } = { addPrefix: false },
+  options: { addPrefix?: boolean } = { addPrefix: false }
 ) {
   const result = new Intl.NumberFormat("en-US", {
     style: "percent",
