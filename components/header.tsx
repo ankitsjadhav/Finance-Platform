@@ -1,5 +1,5 @@
 "use client";
-import { Loader2 } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
 import {
   ClerkLoaded,
   ClerkLoading,
@@ -35,10 +35,10 @@ export const Header = () => {
                     setTimeout(() => window.location.replace("/"), 500);
                   })
                 }
-                className="px-4 py-2 rounded bg-white/10 text-white hover:bg-white/20 transition border-none"
+                className="p-2 rounded bg-white/10 text-white hover:bg-white/20 transition border-none flex items-center justify-center"
                 aria-label="Sign out demo user"
               >
-                Sign out
+                <LogOut className="h-4 w-4" />
               </button>
             ) : (
               <UserButton afterSignOutUrl="/" />
